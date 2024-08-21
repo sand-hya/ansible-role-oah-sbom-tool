@@ -1,0 +1,30 @@
+- name: Set sbom_file_path from BESMAN_TOOL_PATH
+  set_fact:
+    sbom_tool_path: "{{ lookup('env', 'BESMAN_TOOL_PATH') }}"
+  when: lookup('env', 'BESMAN_TOOL_PATH') != ''
+
+- name: Check if sbom-tool file exists
+  stat:
+    path: "{{ sbom_tool_path }}/sbom-tool-linux-x64"
+  register: sbom_file_path
+
+- name: Display file existence status
+  debug:
+    msg: "microsoft sbom-tool file exists at {{ sbom_file_path.stat.path }}"
+  when: sbom_file_path.stat.exists
+
+- name: Installing microsoft sbom-tool
+  block:
+    - name: Checking curl installation
+      become: yes
+      apt:
+        name: curl
+        state: present
+
+    - name: Download and extract microsoft sbom-tool
+      become: yes
+      unarchive:
+        src: "{{ sbom_tool_download_url }}/{{ sbom_tool_version }}/sbom-tool-linux-x64"
+        dest: "{{ sbom_tool_path }}"
+        remote_src: yes
+  when: not sbom_file_path.stat.exists

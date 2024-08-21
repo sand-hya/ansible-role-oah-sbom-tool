@@ -1,0 +1,5 @@
+---
+# defaults file for microsoft sbom-tool
+sbom_tool_version: v2.2.7
+sbom_tool_download_url: https://github.com/microsoft/sbom-tool/releases/download/
+sbom_tool_path: /opt
