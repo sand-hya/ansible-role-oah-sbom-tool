@@ -26,5 +26,4 @@
       get_url:
         url: "{{ sbom_tool_download_url }}/{{ sbom_tool_version }}/sbom-tool-linux-x64"
         dest: "{{ sbom_tool_path }}"
-        remote_src: yes
   when: not sbom_file_path.stat.exists
