@@ -16,6 +16,6 @@
 - name: Removing sbom-tool
   become: yes
   file:
-    path: /opt/sbom-tool-linux-x64
+    path: /opt/sbom-tool
     state: absent
   when: sbom_file_path.stat.exists
